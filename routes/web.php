@@ -19,3 +19,7 @@ use App\Http\Controllers\TaskController;
  * Show task dashboard.
  */
 Route::get('/', [TaskController::class, 'index']);
+/**
+ * Add new task.
+ */
+Route::post('/tasks', [TaskController::class, 'store']);
