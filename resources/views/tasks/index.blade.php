@@ -56,7 +56,8 @@
     <table class="ui table">
     	<thead>
     		<tr>
-    			<th>Tasks</th>
+          <th>Tasks</th>
+          <th>&nbsp;</th>
     		</tr>
     	</thead>
 
@@ -66,6 +67,15 @@
     				<td class="{{ $task->done?'disabled task-done':''}}">
     					{{ $task->name }}
     				</td>
+            <td class="right aligned">
+              <form action="/tasks/{{ $task->id }}" method="POST">
+                {{ csrf_field() }}
+                {{ method_field('DELETE') }}
+                <button type="submit" class="ui icon button">
+                  <i class="trash icon"></i>
+                </button>
+              </form>
+            </td>
     			</tr>
     		@endforeach
     	</tbody>
