@@ -48,6 +48,9 @@
     		<button type="submit" class="ui primary button">Add Task</button>
     	</div>
 
+    	<!-- Display Validation Errors -->
+    	@include('layouts.errors')
+
     </form>
 
   </div>
