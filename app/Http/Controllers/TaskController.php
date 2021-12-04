@@ -51,4 +51,19 @@ class TaskController extends Controller
 
     return redirect('/');
   }
+
+  /**
+   * Update the specified task in storage. For this case, just toggle task's done status.
+   *
+   * @param  \Illuminate\Http\Request  $request
+   * @param  \App\Task  $task
+   * @return \Illuminate\Http\Response
+   */
+  public function update(Request $request, Task $task)
+  {
+      $task->done = !$task->done;
+      $task->save();
+
+      return redirect('/');
+  }
 }
