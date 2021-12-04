@@ -69,6 +69,13 @@
     				</td>
             <td class="right aligned">
               <form action="/tasks/{{ $task->id }}" method="POST">
+    						{{ csrf_field() }}
+    						{{ method_field('PATCH') }}
+    						<button type="submit" class="ui {{ $task->done?'negative':'positive' }} icon button">
+    							<i class="{{ $task->done?'minus':'check' }} icon"></i>
+    						</button>
+    					</form>
+              <form action="/tasks/{{ $task->id }}" method="POST">
                 {{ csrf_field() }}
                 {{ method_field('DELETE') }}
                 <button type="submit" class="ui icon button">
