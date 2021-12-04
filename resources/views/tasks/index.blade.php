@@ -39,7 +39,7 @@
   <div class="ui main text container">
 
     <!-- Add task form -->
-    <form class="ui form {{ count($errors)?'error':'' }}" method="POST" action="">
+    <form class="ui form {{ count($errors)?'error':'' }}" method="POST" action="{{ url('tasks') }}">
 
     	{{ csrf_field() }}
 
