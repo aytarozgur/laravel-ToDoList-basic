@@ -28,3 +28,8 @@ Route::post('/tasks', [TaskController::class, 'store']);
  * Delete task.
  */
 Route::delete('/tasks/{task}', [TaskController::class, 'destroy']);
+
+/**
+ * Update task status.
+ */
+Route::patch('/tasks/{task}', [TaskController::class, 'update']);
