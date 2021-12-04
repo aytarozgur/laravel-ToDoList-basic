@@ -38,4 +38,17 @@ class TaskController extends Controller
 
   return redirect('/');
   }
+
+    /**
+   * Remove the specified task from storage.
+   *
+   * @param  \App\Task  $task
+   * @return \Illuminate\Http\Response
+   */
+  public function destroy(Task $task)
+  {
+    $task->delete();
+
+    return redirect('/');
+  }
 }
