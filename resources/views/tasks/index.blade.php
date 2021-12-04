@@ -52,7 +52,25 @@
     	@include('layouts.errors')
 
     </form>
+    <!-- Current Tasks -->
+    <table class="ui table">
+    	<thead>
+    		<tr>
+    			<th>Tasks</th>
+    		</tr>
+    	</thead>
 
+    	<tbody>
+    		@foreach($tasks as $task)
+    			<tr>
+    				<td class="{{ $task->done?'disabled task-done':''}}">
+    					{{ $task->name }}
+    				</td>
+    			</tr>
+    		@endforeach
+    	</tbody>
+
+    </table>
   </div>
 
   <script
