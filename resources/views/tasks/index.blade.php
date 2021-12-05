@@ -37,58 +37,88 @@
   </div>
 
   <div class="ui main text container">
+    <div class="ui center aligned basic segment">
+      <!-- Add task form -->
+      <form class="ui form {{ count($errors)?'error':'' }}" method="POST" action="{{ url('tasks') }}">
 
-    <!-- Add task form -->
-    <form class="ui form {{ count($errors)?'error':'' }}" method="POST" action="{{ url('tasks') }}">
+        {{ csrf_field() }}
 
-    	{{ csrf_field() }}
+        <div class="ui fluid action input">
+          <input placeholder="Enter task name" type="text" name="name">
+          <button type="submit" class="ui primary button">Add Task</button>
+        </div>
 
-    	<div class="ui fluid action input">
-    		<input placeholder="Enter task name" type="text" name="name">
-    		<button type="submit" class="ui primary button">Add Task</button>
-    	</div>
+        <!-- Display Validation Errors -->
+        @include('layouts.errors')
 
-    	<!-- Display Validation Errors -->
-    	@include('layouts.errors')
+      </form>
+      <div class="ui horizontal divider">
+        Or
+      </div>
+      <!-- Search task form -->
+      <form action="{{ url('tasks/search') }}" method="POST" role="search">
+          {{ csrf_field() }}
 
-    </form>
+          <div class="ui category search">
+            <div class="ui icon input">
+              <input class="prompt" type="text" name="q" placeholder="Search tasks...">
+              <button type="submit" class="btn btn-default">
+                  <i class="search icon"></i>
+              </button>
+
+            </div>
+            <div class="results"></div>
+          </div>
+      </form>
+    </div>
+    @if(session()->has('error'))
+        <div class="ui negative message">
+          <i class="close icon"></i>
+          <div class="header">
+            {{ session()->get('error') }}
+          </div>
+        </div>
+    @endif
     <!-- Current Tasks -->
-    <table class="ui table">
-    	<thead>
-    		<tr>
-          <th>Tasks</th>
-          <th>&nbsp;</th>
-    		</tr>
-    	</thead>
 
-    	<tbody>
-    		@foreach($tasks as $task)
-    			<tr>
-    				<td class="{{ $task->done?'disabled task-done':''}}">
-    					{{ $task->name }}
-    				</td>
-            <td class="right aligned">
-              <form action="/tasks/{{ $task->id }}" method="POST">
-    						{{ csrf_field() }}
-    						{{ method_field('PATCH') }}
-    						<button type="submit" class="ui {{ $task->done?'negative':'positive' }} icon button">
-    							<i class="{{ $task->done?'minus':'check' }} icon"></i>
-    						</button>
-    					</form>
-              <form action="/tasks/{{ $task->id }}" method="POST">
-                {{ csrf_field() }}
-                {{ method_field('DELETE') }}
-                <button type="submit" class="ui icon button">
-                  <i class="trash icon"></i>
-                </button>
-              </form>
-            </td>
-    			</tr>
-    		@endforeach
-    	</tbody>
+      <table class="ui table">
+      	<thead>
+      		<tr>
+            <th>Tasks</th>
+            <th>&nbsp;</th>
+      		</tr>
+      	</thead>
 
-    </table>
-    {{ $tasks->links('layouts.pagination') }}
+      	<tbody>
+      		@foreach(isset($details) ? $details : $tasks as $task)
+      			<tr>
+      				<td class="{{ $task->done?'disabled task-done':''}}">
+      					{{ $task->name }}
+      				</td>
+              <td class="right aligned">
+                <form action="/tasks/{{ $task->id }}" method="POST">
+      						{{ csrf_field() }}
+      						{{ method_field('PATCH') }}
+      						<button type="submit" class="ui {{ $task->done?'negative':'positive' }} icon button">
+      							<i class="{{ $task->done?'minus':'check' }} icon"></i>
+      						</button>
+      					</form>
+                <form action="/tasks/{{ $task->id }}" method="POST">
+                  {{ csrf_field() }}
+                  {{ method_field('DELETE') }}
+                  <button type="submit" class="ui icon button">
+                    <i class="trash icon"></i>
+                  </button>
+                </form>
+              </td>
+      			</tr>
+      		@endforeach
+      	</tbody>
+      </table>
+      {{ isset($details) ? $details : $tasks->links('layouts.pagination') }}
+
+
+
   </div>
 
   <script
