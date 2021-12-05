@@ -66,4 +66,14 @@ class TaskController extends Controller
 
       return redirect('/');
   }
+  public function search(Request $request, Task $task)
+  {
+    $q = $request->input('q');
+    $tasks = Task::where('name','LIKE','%'.$q.'%')->paginate(5);
+    // return view('tasks.index', compact('tasks'));
+    if (count ( $tasks ) > 0)
+        return view('tasks.index', compact('tasks'));
+    else
+        return redirect('/')->with('error', 'No Records!');
+  }
 }
