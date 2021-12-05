@@ -88,6 +88,7 @@
     	</tbody>
 
     </table>
+    {{ $tasks->links('layouts.pagination') }}
   </div>
 
   <script
@@ -95,6 +96,7 @@
     integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
     crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/semantic-ui/2.2.10/semantic.min.js"></script>
+
 </body>
 
 </html>
