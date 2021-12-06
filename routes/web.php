@@ -35,4 +35,6 @@ Route::delete('/tasks/{task}', [TaskController::class, 'destroy']);
  */
 Route::patch('/tasks/{task}', [TaskController::class, 'update']);
 
+Route::put('/tasks/{task}', [TaskController::class, 'updateName']);
+
 Route::any('/tasks/search', [TaskController::class, 'search']);
