@@ -66,6 +66,14 @@ class TaskController extends Controller
 
       return redirect('/');
   }
+  public function updateName(Request $request, Task $task)
+  {
+    $taskID = $task->id;
+    $taskName = $request->input($taskID);
+    Task::where('id',$taskID)->update(['name'=>$taskName]);
+
+    return redirect('/');
+  }
   public function search(Request $request, Task $task)
   {
     $q = $request->input('q');
