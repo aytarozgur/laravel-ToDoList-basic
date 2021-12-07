@@ -80,37 +80,44 @@
         </div>
     @endif
     <!-- Current Tasks -->
-
       <table class="ui table">
       	<thead>
       		<tr>
             <th>Tasks</th>
-            <th>&nbsp;</th>
       		</tr>
       	</thead>
 
       	<tbody>
       		@foreach(isset($details) ? $details : $tasks as $task)
       			<tr>
-      				<td class="{{ $task->done?'disabled task-done':''}}">
-      					{{ $task->name }}
-      				</td>
-              <td class="right aligned">
+      				<td >
                 <form action="/tasks/{{ $task->id }}" method="POST">
-      						{{ csrf_field() }}
-      						{{ method_field('PATCH') }}
-      						<button type="submit" class="ui {{ $task->done?'negative':'positive' }} icon button">
-      							<i class="{{ $task->done?'minus':'check' }} icon"></i>
-      						</button>
-      					</form>
+                  {{ csrf_field() }}
+                  <div class="ui input">
+                    <input class="{{ $task->done?'disabled task-done':''}}" {{ $task->done?'disabled':''}} type="text" name="{{ $task->id }}" value="{{ $task->name }}">
+                  </div>
+
+                  {{ method_field('PUT') }}
+                  <button type="submit" class="ui positive icon button" {{ $task->done?'disabled':''}}>
+                    <i class="edit icon"></i>
+                  </button>
+                </form>
+                <form action="/tasks/{{ $task->id }}" method="POST">
+                  {{ csrf_field() }}
+                  {{ method_field('PATCH') }}
+                  <button type="submit" class="ui {{ $task->done?'negative':'positive' }} icon button">
+                    <i class="{{ $task->done?'minus':'check' }} icon"></i>
+                  </button>
+                </form>
                 <form action="/tasks/{{ $task->id }}" method="POST">
                   {{ csrf_field() }}
                   {{ method_field('DELETE') }}
-                  <button type="submit" class="ui icon button">
+                  <button type="submit" class="ui negative icon button">
                     <i class="trash icon"></i>
                   </button>
                 </form>
-              </td>
+      				</td>
+
       			</tr>
       		@endforeach
       	</tbody>
@@ -126,7 +133,27 @@
     integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
     crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/semantic-ui/2.2.10/semantic.min.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function($)
+  {
+    $(document).on('click', '.row_data', function(event)
+    {
+      event.preventDefault();
 
+      if($(this).attr('edit_type') == 'button')
+      {
+        return false;
+      }
+
+      //make div editable
+      $(this).closest('div').attr('contenteditable', 'true');
+      //add bg css
+      $(this).addClass('bg-warning').css('padding','5px');
+
+      $(this).focus();
+    })
+  });
+  </script>
 </body>
 
 </html>
