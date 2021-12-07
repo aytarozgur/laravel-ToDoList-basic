@@ -64,7 +64,7 @@ class TaskController extends Controller
       $task->done = !$task->done;
       $task->save();
 
-      return redirect('/');
+      return back();
   }
   public function updateName(Request $request, Task $task)
   {
@@ -72,7 +72,7 @@ class TaskController extends Controller
     $taskName = $request->input($taskID);
     Task::where('id',$taskID)->update(['name'=>$taskName]);
 
-    return redirect('/');
+    return back();
   }
   public function search(Request $request, Task $task)
   {
