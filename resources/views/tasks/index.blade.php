@@ -8,9 +8,9 @@
 
   <!-- Site Properties -->
   <title>Sample Laravel Basic Task List</title>
+  <link rel="stylesheet" type="text/css" href={{ URL::asset('semantic/semantic.min.css') }}>
 
-  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/semantic-ui/2.2.10/semantic.min.css">
-
+  {{-- <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/semantic-ui/2.2.10/semantic.min.css"> --}}
   <style type="text/css">
     .main.container {
       padding-top: 6em;
@@ -22,8 +22,12 @@
     table td form {
       display: inline;
     }
+    @media only screen and (max-width: 767px)
+      .ui.table:not(.unstackable) tbody, .ui.table:not(.unstackable) tr, .ui.table:not(.unstackable) tr>td, .ui.table:not(.unstackable) tr>th {
+          width: auto!important;
+          display: inline-table!important;
+      }
   </style>
-
 </head>
 <body>
 
@@ -80,10 +84,11 @@
         </div>
     @endif
     <!-- Current Tasks -->
-      <table class="ui table">
+      <table class="ui celled structured table">
       	<thead>
       		<tr>
             <th>Tasks</th>
+			      <th>&nbsp;</th>
       		</tr>
       	</thead>
 
@@ -91,13 +96,17 @@
       		@foreach(isset($details) ? $details : $tasks as $task)
       			<tr>
       				<td >
+                <div class="ui input">
+                  <input onchange="myChangeFunction(this)" class="{{ $task->done?'disabled task-done':''}}" {{ $task->done?'disabled':''}} type="text" name="n{{ $task->id }}" id="{{ $task->id }}" value="{{ $task->name }}">
+                </div>
+
+      				</td>
+              <td class="right aligned">
+
                 <form action="/tasks/{{ $task->id }}" method="POST">
                   {{ csrf_field() }}
-                  <div class="ui input">
-                    <input class="{{ $task->done?'disabled task-done':''}}" {{ $task->done?'disabled':''}} type="text" name="{{ $task->id }}" value="{{ $task->name }}">
-                  </div>
-
                   {{ method_field('PUT') }}
+                  <input hidden type="text" name="{{ $task->id }}" id="i{{ $task->id }}">
                   <button type="submit" class="ui positive icon button" {{ $task->done?'disabled':''}}>
                     <i class="edit icon"></i>
                   </button>
@@ -116,9 +125,9 @@
                     <i class="trash icon"></i>
                   </button>
                 </form>
-      				</td>
-
+              </td>
       			</tr>
+
       		@endforeach
       	</tbody>
       </table>
@@ -153,6 +162,12 @@
       $(this).focus();
     })
   });
+  </script>
+  <script type="text/javascript">
+  function myChangeFunction(input1){
+    document.getElementById("i"+input1.id).value = input1.value;
+    console.log(input1.id);
+  }
   </script>
 </body>
 
