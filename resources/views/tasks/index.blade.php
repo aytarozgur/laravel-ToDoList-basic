@@ -88,7 +88,15 @@
       	<thead>
       		<tr>
             <th>Tasks</th>
-			      <th>&nbsp;</th>
+			      <th class="right aligned">
+              <form action="{{ route('task.destroy', [ 'task'=> 0 ]) }}" method="POST">
+                {{ csrf_field() }}
+                @method("DELETE")
+                <button type="submit" class="ui negative button" style="width:8em;">
+                  Delete All
+                </button>
+              </form>
+            </th>
       		</tr>
       	</thead>
 
@@ -118,7 +126,7 @@
                     <i class="{{ $task->done?'minus':'check' }} icon"></i>
                   </button>
                 </form>
-                <form action="/tasks/{{ $task->id }}" method="POST">
+                <form action="{{ route('task.destroy', [ 'task'=> $task->id ]) }}" method="POST">
                   {{ csrf_field() }}
                   {{ method_field('DELETE') }}
                   <button type="submit" class="ui negative icon button">
