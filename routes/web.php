@@ -28,7 +28,7 @@ Route::post('/tasks', [TaskController::class, 'store']);
 /**
  * Delete task.
  */
-Route::delete('/tasks/{task}', [TaskController::class, 'destroy']);
+Route::delete('/tasks/{task}', [TaskController::class, 'destroy'])->name('task.destroy');
 
 /**
  * Update task status.
