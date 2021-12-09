@@ -45,16 +45,21 @@ class TaskController extends Controller
    * @param  \App\Task  $task
    * @return \Illuminate\Http\Response
    */
-  public function destroy(Task $task)
+  public function destroy($task)
   {
-    $task->delete();
+    if ($task == 0) {
+      Task::truncate();
+    } else {
+      Task::where('id',$task)->delete();
+    }
+    // $task->delete();
 
     return redirect('/');
   }
 
   public function deleteAll(Task $task)
   {
-    $task->truncate();
+    Task::truncate();
 
     return redirect('/');
   }
