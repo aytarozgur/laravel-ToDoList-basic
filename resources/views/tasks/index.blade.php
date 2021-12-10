@@ -74,6 +74,16 @@
             <div class="results"></div>
           </div>
       </form>
+      <div class="ui horizontal divider">
+        &nbsp;
+      </div>
+      <form action="{{ route('task.destroy', [ 'task'=> 0 ]) }}" method="POST">
+        {{ csrf_field() }}
+        @method("DELETE")
+        <button type="submit" class="ui negative button" style="width:8em;">
+          Delete All
+        </button>
+      </form>
     </div>
     @if(session()->has('error'))
         <div class="ui negative message">
@@ -89,13 +99,7 @@
       		<tr>
             <th>Tasks</th>
 			      <th class="right aligned">
-              <form action="{{ route('task.destroy', [ 'task'=> 0 ]) }}" method="POST">
-                {{ csrf_field() }}
-                @method("DELETE")
-                <button type="submit" class="ui negative button" style="width:8em;">
-                  Delete All
-                </button>
-              </form>
+                &nbsp;
             </th>
       		</tr>
       	</thead>
